@@ -174,10 +174,122 @@ void TestSList8()
 	SListPrint(plist);
 
 	// 把3改成3000
-	SLTNode* ret = SListFind(plist, 3);
-	if (ret)
+	SLTNode* pos = SListFind(plist, 3);
+	if (pos)
 	{
-		ret->data = 3000;
+		pos->data = 3000;
+		SListPrint(plist);
+	}
+	else
+	{
+		printf("找不到\n");
+	}
+
+	// 销毁
+	SListDestroy(plist);
+	plist = NULL;
+}
+
+void TestSList9()
+{
+	SLTNode* plist = NULL;
+
+	// 头插1~10
+	for (int i = 1; i <= 10; i++)
+	{
+		SListPushFront(&plist, i);
+	}
+	SListPrint(plist);
+
+	// 在3前面插入3000
+	SLTNode* pos = SListFind(plist, 3);
+	if (pos)
+	{
+		SListInsert(&plist, pos, 3000);
+		SListPrint(plist);
+	}
+	else
+	{
+		printf("找不到\n");
+	}
+
+	// 销毁
+	SListDestroy(plist);
+	plist = NULL;
+}
+
+void TestSList10()
+{
+	SLTNode* plist = NULL;
+
+	// 头插1~10
+	for (int i = 1; i <= 10; i++)
+	{
+		SListPushFront(&plist, i);
+	}
+	SListPrint(plist);
+
+	// 删除3
+	SLTNode* pos = SListFind(plist, 3);
+	if (pos)
+	{
+		SListErase(&plist, pos);
+		SListPrint(plist);
+	}
+	else
+	{
+		printf("找不到\n");
+	}
+
+	// 销毁
+	SListDestroy(plist);
+	plist = NULL;
+}
+
+void TestSList11()
+{
+	SLTNode* plist = NULL;
+
+	// 头插1~10
+	for (int i = 1; i <= 10; i++)
+	{
+		SListPushFront(&plist, i);
+	}
+	SListPrint(plist);
+
+	// 在3后面插入3000
+	SLTNode* pos = SListFind(plist, 3);
+	if (pos)
+	{
+		SListInsertAfter(pos, 3000);
+		SListPrint(plist);
+	}
+	else
+	{
+		printf("找不到\n");
+	}
+
+	// 销毁
+	SListDestroy(plist);
+	plist = NULL;
+}
+
+void TestSList12()
+{
+	SLTNode* plist = NULL;
+
+	// 头插1~10
+	for (int i = 1; i <= 10; i++)
+	{
+		SListPushFront(&plist, i);
+	}
+	SListPrint(plist);
+
+	// 删除3后面的值（即2）
+	SLTNode* pos = SListFind(plist, 3);
+	if (pos)
+	{
+		SListEraseAfter(pos);
 		SListPrint(plist);
 	}
 	else
@@ -192,7 +304,7 @@ void TestSList8()
 
 int main()
 {
-	TestSList8();
+	TestSList12();
 
 	return 0;
 }

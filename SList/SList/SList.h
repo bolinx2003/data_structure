@@ -38,3 +38,9 @@ void SListInsert(SLTNode** pphead, SLTNode* pos, SLTDataType x);
 
 // 删除pos位置的值
 void SListErase(SLTNode** pphead, SLTNode* pos);
+
+// 在pos位置之后插入
+void SListInsertAfter(SLTNode* pos, SLTDataType x);
+
+// 删除pos位置后面的位置的值
+void SListEraseAfter(SLTNode* pos);
