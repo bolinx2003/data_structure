@@ -358,3 +358,31 @@ struct ListNode
 //
 //    return false;
 //}
+
+// 查找入环点
+//struct ListNode* detectCycle(struct ListNode* head)
+//{
+//	struct ListNode* fast, * slow;
+//	fast = slow = head;
+//
+//	while (fast && fast->next)
+//	{
+//		slow = slow->next;
+//		fast = fast->next->next;
+//
+//		if (slow == fast)
+//		{
+//			// 有环
+//			struct ListNode* meet = fast;
+//			while (meet != head)
+//			{
+//				meet = meet->next;
+//				head = head->next;
+//			}
+//
+//			return meet;
+//		}
+//	}
+//
+//	return NULL;
+//}
