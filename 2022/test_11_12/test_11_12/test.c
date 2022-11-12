@@ -2,6 +2,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
 
 struct ListNode
 {
@@ -224,4 +226,135 @@ struct ListNode
 //		return greaterhead;
 //
 //	return lesshead;
+//}
+
+// 判断链表是否是回文结构
+//bool chkPalindrome(struct ListNode* head)
+//{
+//	// 找中间结点
+//	if (head == NULL)
+//	{
+//		return true;
+//	}
+//
+//	struct ListNode* fast, * slow;
+//	fast = slow = head;
+//
+//	while (fast && fast->next)
+//	{
+//		slow = slow->next;
+//		fast = fast->next->next;
+//	}
+//	struct ListNode* mid = slow;
+//
+//	// 逆置后半段
+//	struct ListNode* n1, * n2, * n3;
+//	n1 = NULL;
+//	n2 = mid;
+//	n3 = mid->next;
+//
+//	while (n2)
+//	{
+//		// 倒转指向
+//		n2->next = n1;
+//
+//		// 迭代
+//		n1 = n2;
+//		n2 = n3;
+//		if (n3)
+//			n3 = n3->next;
+//	}
+//	struct ListNode* rHead = n1;
+//
+//	// 比较
+//	while (rHead)
+//	{
+//		if (rHead->val == head->val)
+//		{
+//			rHead = rHead->next;
+//			head = head->next;
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//	}
+//
+//	return true;
+//}
+
+// 判断链表是否相交，若相交，返回第一个交点，否则返回NULL
+//struct ListNode* getIntersectionNode(struct ListNode* headA, struct ListNode* headB)
+//{
+//	if (headA == NULL || headB == NULL)
+//	{
+//		return NULL;
+//	}
+//
+//	// 找尾结点，判断是否相交，同时统计长度
+//	int lenA = 1, lenB = 1;
+//	struct ListNode* curA = headA, * curB = headB;
+//	while (curA->next)
+//	{
+//		curA = curA->next;
+//		lenA++;
+//	}
+//	while (curB->next)
+//	{
+//		curB = curB->next;
+//		lenB++;
+//	}
+//	if (curA != curB)
+//	{
+//		return false;
+//	}
+//
+//	// 计算长度差距
+//	int gap = abs(lenA - lenB);
+//
+//	// 让长链表先走差距步
+//	struct ListNode* longlist = headA, * shortlist = headB;
+//	if (lenA < lenB)
+//	{
+//		longlist = headB;
+//		shortlist = headA;
+//	}
+//
+//	while (gap--)
+//	{
+//		longlist = longlist->next;
+//	}
+//
+//	// 同时走
+//	while (longlist != shortlist)
+//	{
+//		longlist = longlist->next;
+//		shortlist = shortlist->next;
+//	}
+//
+//	return longlist;
+//}
+
+// 判断是否带环
+//bool hasCycle(struct ListNode* head)
+//{
+//    if (head == NULL)
+//    {
+//        return false;
+//    }
+//
+//    struct ListNode* fast = head, * slow = head;
+//
+//    while (fast && fast->next)
+//    {
+//        slow = slow->next;
+//        fast = fast->next->next;
+//
+//        if (fast == slow)
+//        {
+//            return true;
+//        }
+//    }
+//
+//    return false;
 //}
