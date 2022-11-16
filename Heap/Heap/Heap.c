@@ -2,9 +2,29 @@
 
 #include "Heap.h"
 
+void HeapPrint(const HP* php)
+{
+	assert(php);
+
+	int k = 1;     // 层数
+	int count = 0; // 已经打印的数据个数
+	// 当 count = 2^k - 1 时换行
+	for (int i = 0; i < php->size; i++)
+	{
+		printf("%d ", php->a[i]);
+		if (++count == (int)pow(2, k) - 1)
+		{
+			printf("\n");
+			k++;
+		}
+	}
+	printf("\n");
+}
+
 void HeapInit(HP* php)
 {
 	assert(php);
+
 	php->a = NULL;
 	php->size = php->capacity = 0;
 }
@@ -27,6 +47,7 @@ static void Swap(HPDataType* p1, HPDataType* p2)
 	*p2 = tmp;
 }
 
+// 向上调整
 static void AdjustUp(HPDataType* a, int child)
 {
 	assert(a);
@@ -34,7 +55,7 @@ static void AdjustUp(HPDataType* a, int child)
 	int parent = (child - 1) / 2;
 	while (child > 0)
 	{
-		if (a[child] > a[parent])
+		if (a[child] < a[parent])
 		{
 			Swap(a + child, a + parent);
 			child = parent;
@@ -68,10 +89,69 @@ void HeapPush(HP* php, HPDataType x)
 
 	php->a[php->size++] = x;
 
+	// 向上调整
 	AdjustUp(php->a, php->size - 1);
 }
 
-void HeapPop(HP* php);
-HPDataType HeapTop(const HP* php);
-bool HeapEmpty(const HP* php);
-int HeapSize(const HP* php);
+static void AdjustDown(HPDataType* a, int size, int parent)
+{
+	assert(a);
+
+	// 左孩子
+	int child = parent * 2 + 1;
+	while (child < size)
+	{
+		// 如果有右孩子，则取两个孩子中较小的
+		if (child + 1 < size && a[child + 1] < a[child])
+		{
+			child++;
+		}
+
+		if (a[child] < a[parent])
+		{
+			Swap(a + child, a + parent);
+			parent = child;
+			child = parent * 2 + 1;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
+void HeapPop(HP* php)
+{
+	assert(php);
+	assert(php->size > 0);
+
+	// 交换第一个数据和最后一个数据
+	Swap(php->a, php->a + php->size - 1);
+
+	// 删除最后一个数据
+	php->size--;
+
+	AdjustDown(php->a, php->size, 0);
+}
+
+HPDataType HeapTop(const HP* php)
+{
+	assert(php);
+	assert(php->size > 0);
+
+	return php->a[0];
+}
+
+bool HeapEmpty(const HP* php)
+{
+	assert(php);
+
+	return php->size == 0;
+}
+
+int HeapSize(const HP* php)
+{
+	assert(php);
+
+	return php->size;
+}

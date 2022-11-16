@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <math.h>
 
 typedef int HPDataType;
 
@@ -14,6 +15,7 @@ typedef struct Heap
 	int capacity;
 }HP;
 
+void HeapPrint(const HP* php);
 void HeapInit(HP* php);
 void HeapDestroy(HP* php);
 void HeapPush(HP* php, HPDataType x);
