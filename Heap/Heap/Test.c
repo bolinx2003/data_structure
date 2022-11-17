@@ -1,6 +1,7 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS 1
 
 #include "Heap.h"
+#include "HeapSort.h"
 
 void TestHeap()
 {
@@ -30,9 +31,16 @@ void TestHeap()
 	HeapDestroy(&hp);
 }
 
+void TestHeapSort()
+{
+	int a[] = { 10,9,8,7,6,5,4,3,2,1 };
+	HeapSort(a, sizeof(a) / sizeof(a[0]));
+	PrintArr(a, sizeof(a) / sizeof(a[0]));
+}
+
 int main()
 {
-	TestHeap();
+	TestHeapSort();
 
 	return 0;
 }

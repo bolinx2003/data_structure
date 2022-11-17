@@ -38,7 +38,7 @@ void HeapDestroy(HP* php)
 	php->size = php->capacity = 0;
 }
 
-static void Swap(HPDataType* p1, HPDataType* p2)
+void Swap(HPDataType* p1, HPDataType* p2)
 {
 	assert(p1 && p2);
 
@@ -47,15 +47,14 @@ static void Swap(HPDataType* p1, HPDataType* p2)
 	*p2 = tmp;
 }
 
-// 向上调整
-static void AdjustUp(HPDataType* a, int child)
+void AdjustUp(HPDataType* a, int child)
 {
 	assert(a);
 
 	int parent = (child - 1) / 2;
 	while (child > 0)
 	{
-		if (a[child] < a[parent])
+		if (a[child] > a[parent]) // 小于--小堆，大于--大堆
 		{
 			Swap(a + child, a + parent);
 			child = parent;
@@ -93,7 +92,7 @@ void HeapPush(HP* php, HPDataType x)
 	AdjustUp(php->a, php->size - 1);
 }
 
-static void AdjustDown(HPDataType* a, int size, int parent)
+void AdjustDown(HPDataType* a, int size, int parent)
 {
 	assert(a);
 
@@ -102,12 +101,13 @@ static void AdjustDown(HPDataType* a, int size, int parent)
 	while (child < size)
 	{
 		// 如果有右孩子，则取两个孩子中较小的
-		if (child + 1 < size && a[child + 1] < a[child])
+		if (child + 1 < size
+			&& a[child + 1] > a[child]) // 小于--小堆，大于--大堆
 		{
 			child++;
 		}
 
-		if (a[child] < a[parent])
+		if (a[child] > a[parent]) // 小于--小堆，大于--大堆
 		{
 			Swap(a + child, a + parent);
 			parent = child;
