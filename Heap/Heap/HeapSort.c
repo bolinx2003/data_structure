@@ -58,6 +58,83 @@ void HeapSort(int* a, int n)
 //	HeapDestroy(&hp);
 //}
 
+// k个数建堆
+void PrintTopK(int* a, int n, int k)
+{
+	assert(a);
+
+	// 前k个数建堆
+	int* kMinHeap = (int*)malloc(sizeof(int) * k);
+	if (kMinHeap == NULL)
+	{
+		perror("PrintTopK::malloc");
+		return;
+	}
+	for (int i = 0; i < k; i++)
+	{
+		kMinHeap[i] = a[i];
+	}
+	for (int i = (k - 1 - 1) / 2; i >= 0; i--)
+	{
+		AdjustDown(kMinHeap, k, i);
+	}
+
+	// 将剩余的数和堆顶的数比较
+	for (int i = k; i < n; i++)
+	{
+		if (a[i] > kMinHeap[0])
+		{
+			kMinHeap[0] = a[i];
+			AdjustDown(kMinHeap, k, 0);
+		}
+	}
+
+	for (int i = 0; i < k; i++)
+	{
+		printf("%d ", kMinHeap[i]);
+	}
+	printf("\n");
+
+	free(kMinHeap);
+	kMinHeap = NULL;
+}
+
+// 先取top再pop
+//void PrintTopK(int* a, int n, int k)
+//{
+//	assert(a);
+//
+//	// 向下建堆
+//	for (int i = (n - 1 - 1) / 2; i >= 0; i--)
+//	{
+//		AdjustDown(a, n, i);
+//	}
+//
+//	int end = n - 1;
+//	while (k--)
+//	{
+//		// 打印堆顶数据
+//		printf("%d ", a[0]);
+//
+//		// pop掉堆顶数据
+//		Swap(a, a + end);
+//		AdjustDown(a, end--, 0);
+//	}
+//}
+
+// 使用堆排序
+//void PrintTopK(int* a, int n, int k)
+//{
+//	assert(a);
+//
+//	HeapSort(a, n);
+//	for (int i = 0; i < k; i++)
+//	{
+//		printf("%d ", a[i]);
+//	}
+//	printf("\n");
+//}
+
 void PrintArr(int* a, int n)
 {
 	assert(a);

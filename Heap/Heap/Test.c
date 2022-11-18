@@ -2,6 +2,7 @@
 
 #include "Heap.h"
 #include "HeapSort.h"
+#include <time.h>
 
 void TestHeap()
 {
@@ -38,9 +39,42 @@ void TestHeapSort()
 	PrintArr(a, sizeof(a) / sizeof(a[0]));
 }
 
+void TestTopK()
+{
+	srand((unsigned int)time(NULL));
+
+	int n = 10000;
+	int* a = (int*)malloc(sizeof(int) * n);
+	if (a == NULL)
+	{
+		perror("TestTopk::malloc");
+		return;
+	}
+
+	for (int i = 0; i < n; ++i)
+	{
+		a[i] = rand() % 1000000;
+	}
+
+	a[5] = 1000000 + 1;
+	a[1231] = 1000000 + 2;
+	a[531] = 1000000 + 3;
+	a[5121] = 1000000 + 4;
+	a[115] = 1000000 + 5;
+	a[2335] = 1000000 + 6;
+	a[9999] = 1000000 + 7;
+	a[76] = 1000000 + 8;
+	a[423] = 1000000 + 9;
+	a[3144] = 1000000 + 10;
+
+	PrintTopK(a, n, 10);
+}
+
 int main()
 {
-	TestHeapSort();
+	//TestHeap();
+	//TestHeapSort();
+	TestTopK();
 
 	return 0;
 }

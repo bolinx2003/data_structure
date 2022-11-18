@@ -54,7 +54,7 @@ void AdjustUp(HPDataType* a, int child)
 	int parent = (child - 1) / 2;
 	while (child > 0)
 	{
-		if (a[child] > a[parent]) // 小于--小堆，大于--大堆
+		if (a[child] < a[parent]) // 小于--小堆，大于--大堆
 		{
 			Swap(a + child, a + parent);
 			child = parent;
@@ -102,12 +102,12 @@ void AdjustDown(HPDataType* a, int size, int parent)
 	{
 		// 如果有右孩子，则取两个孩子中较小的
 		if (child + 1 < size
-			&& a[child + 1] > a[child]) // 小于--小堆，大于--大堆
+			&& a[child + 1] < a[child]) // 小于--小堆，大于--大堆
 		{
 			child++;
 		}
 
-		if (a[child] > a[parent]) // 小于--小堆，大于--大堆
+		if (a[child] < a[parent]) // 小于--小堆，大于--大堆
 		{
 			Swap(a + child, a + parent);
 			parent = child;
