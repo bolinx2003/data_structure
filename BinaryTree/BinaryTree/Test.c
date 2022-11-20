@@ -37,36 +37,98 @@ BTNode* CreatBinaryTree()
 *      3    5 6
 */
 
-void TestBinaryTree()
+void TestBinaryTree1()
 {
+	// 创建二叉树
 	BTNode* root = CreatBinaryTree();
 
 	// 前序遍历
+	printf("PreOrder:\n");
 	PreOrder(root); // 1 2 3 # # # 4 5 # # 6 # #
-	printf("\n");
+
+	// 销毁二叉树
+	TreeDestroy(root);
+	root = NULL;
+}
+
+void TestBinaryTree2()
+{
+	// 创建二叉树
+	BTNode* root = CreatBinaryTree();
 
 	// 中序遍历
+	printf("InOrder:\n");
 	InOrder(root); // # 3 # 2 # 1 # 5 # 4 # 6 #
-	printf("\n");
+
+	// 销毁二叉树
+	TreeDestroy(root);
+	root = NULL;
+}
+
+void TestBinaryTree3()
+{
+	// 创建二叉树
+	BTNode* root = CreatBinaryTree();
 
 	// 后序遍历
+	printf("PostOrder:\n");
 	PostOrder(root); // # # 3 # 2 # # 5 # # 6 4 1
-	printf("\n");
-	printf("\n");
+
+	// 销毁二叉树
+	TreeDestroy(root);
+	root = NULL;
+}
+
+void TestBinaryTree4()
+{
+	// 创建二叉树
+	BTNode* root = CreatBinaryTree();
+
+	// 层序遍历
+	printf("LevelOrder:\n");
+	LevelOrder(root); // 1 2 4 3 5 6
+
+	// 销毁二叉树
+	TreeDestroy(root);
+	root = NULL;
+}
+
+void TestBinaryTree5()
+{
+	// 创建二叉树
+	BTNode* root = CreatBinaryTree();
 
 	// 统计数据个数
 	count = 0;
 	TreeSize1(root);
 	printf("TreeSize1: %d\n", count);
 	printf("TreeSize2: %d\n", TreeSize2(root));
-	printf("\n");
+
+	// 销毁二叉树
+	TreeDestroy(root);
+	root = NULL;
+}
+
+void TestBinaryTree6()
+{
+	// 创建二叉树
+	BTNode* root = CreatBinaryTree();
 
 	// 统计叶子结点个数
 	count = 0;
 	TreeLeafSize1(root);
 	printf("TreeLeafSize1: %d\n", count);
 	printf("TreeLeafSize2: %d\n", TreeLeafSize2(root));
-	printf("\n");
+
+	// 销毁二叉树
+	TreeDestroy(root);
+	root = NULL;
+}
+
+void TestBinaryTree7()
+{
+	// 创建二叉树
+	BTNode* root = CreatBinaryTree();
 
 	// 求第k层结点个数
 	printf("TreeKthLevelSize:\n");
@@ -74,11 +136,29 @@ void TestBinaryTree()
 	{
 		printf("level %d: %d\n", i, TreeKthLevelSize(root, i));
 	}
-	printf("\n");
+
+	// 销毁二叉树
+	TreeDestroy(root);
+	root = NULL;
+}
+
+void TestBinaryTree8()
+{
+	// 创建二叉树
+	BTNode* root = CreatBinaryTree();
 
 	// 求二叉树的深度
 	printf("TreeDepth: %d\n", TreeDepth(root));
-	printf("\n");
+
+	// 销毁二叉树
+	TreeDestroy(root);
+	root = NULL;
+}
+
+void TestBinaryTree9()
+{
+	// 创建二叉树
+	BTNode* root = CreatBinaryTree();
 
 	// 查找
 	printf("TreeFind:\n");
@@ -94,12 +174,15 @@ void TestBinaryTree()
 			printf("找到了%d<-->%d\n", i, pos->data);
 		}
 	}
-	printf("\n");
+
+	// 销毁二叉树
+	TreeDestroy(root);
+	root = NULL;
 }
 
 int main()
 {
-	TestBinaryTree();
+	TestBinaryTree9();
 
 	return 0;
 }

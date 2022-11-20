@@ -4,6 +4,18 @@
 
 int count = 0;
 
+void TreeDestroy(BTNode* root)
+{
+	if (root == NULL)
+		return;
+
+	TreeDestroy(root->left);
+	TreeDestroy(root->right);
+	//printf("%p: %d\n", root, root->data);
+	free(root);
+	root = NULL;
+}
+
 void PreOrder(const BTNode* root)
 {
 	if (root == NULL)
@@ -41,6 +53,31 @@ void PostOrder(const BTNode* root)
 	PostOrder(root->left);
 	PostOrder(root->right);
 	printf("%d ", root->data);
+}
+
+void LevelOrder(const BTNode* root)
+{
+	Queue q;
+	QueueInit(&q);
+
+	if (root)
+		QueuePush(&q, (BTNode*)root);
+
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		printf("%d ", front->data);
+		QueuePop(&q);
+
+		if (front->left)
+			QueuePush(&q, front->left);
+
+		if (front->right)
+			QueuePush(&q, front->right);
+	}
+	printf("\n");
+
+	QueueDestroy(&q);
 }
 
 void TreeSize1(const BTNode* root)

@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "Queue.h"
 
 // 链式二叉树
 
@@ -17,6 +18,9 @@ typedef struct BinaryTreeNode
 // 用于统计个数
 extern int count;
 
+// 销毁二叉树
+void TreeDestroy(BTNode* root);
+
 // 前序遍历
 void PreOrder(const BTNode* root);
 
@@ -25,6 +29,9 @@ void InOrder(const BTNode* root);
 
 // 后序遍历
 void PostOrder(const BTNode* root);
+
+// 层序遍历
+void LevelOrder(const BTNode* root);
 
 // 统计结点个数
 void TreeSize1(const BTNode* root);
