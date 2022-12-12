@@ -180,9 +180,30 @@ void TestBinaryTree9()
 	root = NULL;
 }
 
+void TestBinaryTree10()
+{
+	// 创建二叉树
+	BTNode* root = CreatBinaryTree();
+
+	printf("TreeComplete: ");
+	bool ret = TreeComplete(root);
+	if (ret)
+	{
+		printf("true\n");
+	}
+	else
+	{
+		printf("false\n");
+	}
+
+	// 销毁二叉树
+	TreeDestroy(root);
+	root = NULL;
+}
+
 int main()
 {
-	TestBinaryTree9();
+	TestBinaryTree10();
 
 	return 0;
 }

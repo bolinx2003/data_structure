@@ -161,3 +161,45 @@ BTNode* TreeFind(const BTNode* root, BTDataType x)
 
 	return NULL;
 }
+
+bool TreeComplete(const BTNode* root)
+{
+	Queue q;
+	QueueInit(&q);
+
+	if (root)
+		QueuePush(&q, (BTNode*)root);
+
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+
+		if (front)
+		{
+			QueuePush(&q, front->left);
+			QueuePush(&q, front->right);
+		}
+		else
+		{
+			// 遇到空，跳出层序遍历
+			break;
+		}
+	}
+
+	// 判断后面有没有非空，如果有就不是完全二叉树
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+
+		if (front)
+		{
+			QueueDestroy(&q);
+			return false;
+		}
+	}
+
+	QueueDestroy(&q);
+	return true;
+}

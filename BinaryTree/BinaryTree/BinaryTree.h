@@ -49,3 +49,6 @@ int TreeDepth(const BTNode* root);
 
 // 查找值为x的结点
 BTNode* TreeFind(const BTNode* root, BTDataType x);
+
+// 判断是否为完全二叉树
+bool TreeComplete(const BTNode* root);
