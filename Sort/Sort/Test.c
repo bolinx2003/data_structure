@@ -48,13 +48,13 @@ void TestAll()
 	int* a = calloc(n, sizeof(int));
 	if (a == NULL)
 	{
-		perror("TestOP::calloc");
+		perror("TestAll::calloc");
 		return;
 	}
 	int* copy = calloc(n, sizeof(int));
 	if (copy == NULL)
 	{
-		perror("TestOP::calloc");
+		perror("TestAll::calloc");
 		return;
 	}
 
