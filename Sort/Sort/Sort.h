@@ -18,3 +18,6 @@ void ShellSort(int* a, int n);
 
 // 堆排序
 void HeapSort(int* a, int n);
+
+// 选择排序
+void SelectSort(int* a, int n);

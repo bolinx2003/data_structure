@@ -110,3 +110,36 @@ void HeapSort(int* a, int n)
 		AdjustDown(a, end--, 0);
 	}
 }
+
+void SelectSort(int* a, int n)
+{
+	int begin, end;
+	for (begin = 0, end = n - 1; begin < end; ++begin, --end)
+	{
+		// 找出最大、最小元素的下标
+		int maxi, mini;
+		maxi = mini = begin;
+		for (int i = begin + 1; i <= end; i++)
+		{
+			if (a[i] > a[maxi])
+			{
+				maxi = i;
+			}
+			if (a[i] < a[mini])
+			{
+				mini = i;
+			}
+		}
+		// 把最小的换前面去
+		Swap(a + begin, a + mini);
+
+		// 如果最大的和最前面的重叠，则最大的会被换走，需要修正
+		if (maxi == begin)
+		{
+			maxi = mini;
+		}
+
+		// 把最大的换后面去
+		Swap(a + maxi, a + end);
+	}
+}

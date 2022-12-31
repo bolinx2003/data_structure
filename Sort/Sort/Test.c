@@ -41,8 +41,8 @@ void TestAll()
 {
 	srand((unsigned int)time(NULL));
 
-	void(*pSort[])(int*, int) = { InsertSort, ShellSort, HeapSort };
-	char* sortFunName[] = { "InsertSort", "ShellSort", "HeapSort" };
+	void(*pSort[])(int*, int) = { InsertSort, ShellSort, HeapSort, SelectSort };
+	char* sortFunName[] = { "InsertSort", "ShellSort", "HeapSort", "SelectSort" };
 	int sz = sizeof(pSort) / sizeof(pSort[0]);
 	const int n = 10000;
 	int* a = calloc(n, sizeof(int));
@@ -96,7 +96,7 @@ void TestAll()
 
 int main()
 {
-	//TestSort(HeapSort);
+	//TestSort(SelectSort);
 	TestAll();
 
 	return 0;
