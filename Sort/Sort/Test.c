@@ -4,7 +4,7 @@
 
 void TestSort(void(*pSort)(int*, int))
 {
-	const int n = 100000;
+	const int n = 10000;
 	int* a = calloc(n, sizeof(int));
 	if (a == NULL)
 	{
@@ -41,10 +41,10 @@ void TestAll()
 {
 	srand((unsigned int)time(NULL));
 
-	void(*pSort[])(int*, int) = { InsertSort, ShellSort, HeapSort, SelectSort, BubbleSort };
-	char* sortFunName[] = { "InsertSort", "ShellSort", "HeapSort", "SelectSort", "BubbleSort" };
+	void(*pSort[])(int*, int) = { InsertSort, ShellSort, HeapSort, SelectSort, BubbleSort, QuickSort };
+	char* sortFunName[] = { "InsertSort", "ShellSort", "HeapSort", "SelectSort", "BubbleSort", "QuickSort" };
 	int sz = sizeof(pSort) / sizeof(pSort[0]);
-	const int n = 100000;
+	const int n = 10000;
 	int* a = calloc(n, sizeof(int));
 	if (a == NULL)
 	{
@@ -96,12 +96,8 @@ void TestAll()
 
 int main()
 {
-	//void(*pSort[])(int*, int) = { InsertSort, ShellSort, HeapSort, SelectSort, BubbleSort };
-	//for (int i = 0; i < sizeof(pSort) / sizeof(pSort[0]); i++)
-	//{
-	//	TestSort(pSort[i]);
-	//}
-	TestAll();
+	TestSort(QuickSort);
+	//TestAll();
 
 	return 0;
 }

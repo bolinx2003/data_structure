@@ -13,6 +13,8 @@ static void Swap(int* pa, int* pb)
 
 void PrintArr(int* a, int n)
 {
+	assert(a);
+
 	for (int i = 0; i < n; i++)
 	{
 		printf("%d ", a[i]);
@@ -22,6 +24,8 @@ void PrintArr(int* a, int n)
 
 void InsertSort(int* a, int n)
 {
+	assert(a);
+
 	for (int i = 0; i < n - 1; i++)
 	{
 		// [0,end]有序，插入end+1位置的数据
@@ -45,6 +49,8 @@ void InsertSort(int* a, int n)
 
 void ShellSort(int* a, int n)
 {
+	assert(a);
+
 	int gap = n;
 	while (gap > 1)
 	{
@@ -74,6 +80,8 @@ void ShellSort(int* a, int n)
 // 升序建大堆
 static void AdjustDown(int* a, int n, int parent)
 {
+	assert(a);
+
 	int child = parent * 2 + 1;
 	while (child < n)
 	{
@@ -96,6 +104,8 @@ static void AdjustDown(int* a, int n, int parent)
 
 void HeapSort(int* a, int n)
 {
+	assert(a);
+
 	// 向下建堆
 	for (int i = (n - 2) / 2; i >= 0; i--)
 	{
@@ -113,6 +123,8 @@ void HeapSort(int* a, int n)
 
 void SelectSort(int* a, int n)
 {
+	assert(a);
+
 	int begin, end;
 	for (begin = 0, end = n - 1; begin < end; ++begin, --end)
 	{
@@ -146,6 +158,8 @@ void SelectSort(int* a, int n)
 
 void BubbleSort(int* a, int n)
 {
+	assert(a);
+
 	for (int i = 0; i < n - 1; i++)
 	{
 		bool flag = true; // 假设已经有序
@@ -162,4 +176,48 @@ void BubbleSort(int* a, int n)
 			return;
 		}
 	}
+}
+
+// 方便递归：排序[begin, end]
+static void _QuickSort(int* a, int begin, int end)
+{
+	assert(a);
+
+	// 区间只有一个数或者不存在时返回
+	if (begin >= end)
+		return;
+
+	int left = begin;
+	int right = end;
+	int keyi = left;
+
+	while (left < right)
+	{
+		// 右边找小
+		while (left < right && a[right] >= a[keyi])
+		{
+			--right;
+		}
+
+		// 左边找大
+		while (left < right && a[left] <= a[keyi])
+		{
+			++left;
+		}
+
+		Swap(a + left, a + right);
+	}
+
+	Swap(a + keyi, a + left);
+	keyi = left;
+
+	_QuickSort(a, begin, keyi - 1);
+	_QuickSort(a, keyi + 1, end);
+}
+
+void QuickSort(int* a, int n)
+{
+	assert(a);
+
+	_QuickSort(a, 0, n - 1);
 }

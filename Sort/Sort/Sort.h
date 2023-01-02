@@ -24,3 +24,6 @@ void SelectSort(int* a, int n);
 
 // 冒泡排序
 void BubbleSort(int* a, int n);
+
+// 快速排序
+void QuickSort(int* a, int n);
