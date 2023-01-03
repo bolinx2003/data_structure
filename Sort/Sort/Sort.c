@@ -178,15 +178,11 @@ void BubbleSort(int* a, int n)
 	}
 }
 
-// 方便递归：排序[begin, end]
-static void _QuickSort(int* a, int begin, int end)
+// 单趟快排
+
+// Hoare
+static int PartSort1(int* a, int begin, int end)
 {
-	assert(a);
-
-	// 区间只有一个数或者不存在时返回
-	if (begin >= end)
-		return;
-
 	int left = begin;
 	int right = end;
 	int keyi = left;
@@ -211,8 +207,60 @@ static void _QuickSort(int* a, int begin, int end)
 	Swap(a + keyi, a + left);
 	keyi = left;
 
+	return keyi;
+}
+
+// 挖坑法
+static int PartSort2(int* a, int begin, int end)
+{
+	int key = a[begin];
+	int piti = begin;
+
+	while (begin < end)
+	{
+		// 右边找小，填左边坑，该位置形成新坑
+		while (begin < end && a[end] >= key)
+		{
+			--end;
+		}
+		a[piti] = a[end];
+		piti = end;
+
+		// 左边找大，填右边坑，该位置形成新坑
+		while (begin < end && a[begin] <= key)
+		{
+			++begin;
+		}
+		a[piti] = a[begin];
+		piti = begin;
+	}
+
+	a[piti] = key;
+	return piti;
+}
+
+// 双指针法
+static int PartSort3(int* a, int begin, int end)
+{
+}
+
+static void _QuickSort(int* a, int begin, int end)
+{
+	assert(a);
+
+	// 区间只有一个数或者不存在时返回
+	if (begin >= end)
+		return;
+
+	int keyi = PartSort3(a, begin, end);
+
 	_QuickSort(a, begin, keyi - 1);
 	_QuickSort(a, keyi + 1, end);
+}
+
+static int CmpByInt(const void* e1, const void* e2)
+{
+	return *(int*)e1 - *(int*)e2;
 }
 
 void QuickSort(int* a, int n)
@@ -220,4 +268,7 @@ void QuickSort(int* a, int n)
 	assert(a);
 
 	_QuickSort(a, 0, n - 1);
+
+	// 调用库函数
+	//qsort(a, n, sizeof(a[0]), CmpByInt);
 }

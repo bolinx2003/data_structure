@@ -4,7 +4,7 @@
 
 void TestSort(void(*pSort)(int*, int))
 {
-	const int n = 10000;
+	const int n = 1000000;
 	int* a = calloc(n, sizeof(int));
 	if (a == NULL)
 	{
@@ -13,10 +13,12 @@ void TestSort(void(*pSort)(int*, int))
 	}
 	for (int i = 0; i < n; i++)
 	{
-		a[i] = n - i;
+		a[i] = rand();
 	}
 
+	clock_t begin = clock();
 	pSort(a, n);
+	clock_t end = clock();
 
 	// 检验是否排序成功
 	bool flag = true;
@@ -29,9 +31,11 @@ void TestSort(void(*pSort)(int*, int))
 		}
 	}
 	if (flag)
-		printf("排序成功\n");
+		printf("排序成功，");
 	else
-		printf("排序失败\n");
+		printf("排序失败，");
+
+	printf("耗时：%ld毫秒\n", end - begin);
 
 	free(a);
 	a = NULL;
@@ -39,12 +43,10 @@ void TestSort(void(*pSort)(int*, int))
 
 void TestAll()
 {
-	srand((unsigned int)time(NULL));
-
 	void(*pSort[])(int*, int) = { InsertSort, ShellSort, HeapSort, SelectSort, BubbleSort, QuickSort };
 	char* sortFunName[] = { "InsertSort", "ShellSort", "HeapSort", "SelectSort", "BubbleSort", "QuickSort" };
 	int sz = sizeof(pSort) / sizeof(pSort[0]);
-	const int n = 10000;
+	const int n = 100000;
 	int* a = calloc(n, sizeof(int));
 	if (a == NULL)
 	{
@@ -67,9 +69,9 @@ void TestAll()
 	for (int i = 0; i < sz; i++)
 	{
 		memmove(copy, a, n * sizeof(int));
-		int begin = clock();
+		clock_t begin = clock();
 		pSort[i](copy, n);
-		int end = clock();
+		clock_t end = clock();
 
 		// 检验是否排序成功
 		bool flag = true;
@@ -96,6 +98,8 @@ void TestAll()
 
 int main()
 {
+	srand((unsigned int)time(NULL));
+
 	TestSort(QuickSort);
 	//TestAll();
 
