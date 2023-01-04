@@ -178,14 +178,57 @@ void BubbleSort(int* a, int n)
 	}
 }
 
-// 单趟快排
+// 三数取中
+static int GetMidIndex(int* a, int begin, int end)
+{
+	assert(a);
+
+	int mid = begin + (end - begin) / 2;
+	if (a[begin] < a[mid])
+	{
+		if (a[mid] < a[end])
+		{
+			return mid;
+		}
+		else if (a[begin] < a[end])
+		{
+			return end;
+		}
+		else
+		{
+			return begin;
+		}
+	}
+	else // a[begin] >= a[mid]
+	{
+		if (a[mid] > a[end])
+		{
+			return mid;
+		}
+		else if (a[begin] > a[end])
+		{
+			return end;
+		}
+		else
+		{
+			return begin;
+		}
+	}
+}
+
+// 单趟快排的3种思路
 
 // Hoare
 static int PartSort1(int* a, int begin, int end)
 {
+	assert(a);
+
 	int left = begin;
 	int right = end;
 	int keyi = left;
+
+	int midi = GetMidIndex(a, begin, end);
+	Swap(a + keyi, a + midi);
 
 	while (left < right)
 	{
@@ -213,6 +256,11 @@ static int PartSort1(int* a, int begin, int end)
 // 挖坑法
 static int PartSort2(int* a, int begin, int end)
 {
+	assert(a);
+
+	int midi = GetMidIndex(a, begin, end);
+	Swap(a + begin, a + midi);
+
 	int key = a[begin];
 	int piti = begin;
 
@@ -242,6 +290,29 @@ static int PartSort2(int* a, int begin, int end)
 // 双指针法
 static int PartSort3(int* a, int begin, int end)
 {
+	assert(a);
+
+	int prev = begin;
+	int cur = prev + 1;
+	int keyi = begin;
+
+	int midi = GetMidIndex(a, begin, end);
+	Swap(a + keyi, a + midi);
+
+	while (cur <= end)
+	{
+		if (a[cur] < a[keyi] && ++prev != cur)
+		{
+			Swap(a + prev, a + cur);
+		}
+
+		++cur;
+	}
+
+	Swap(a + prev, a + keyi);
+	keyi = prev;
+
+	return keyi;
 }
 
 static void _QuickSort(int* a, int begin, int end)
@@ -252,14 +323,24 @@ static void _QuickSort(int* a, int begin, int end)
 	if (begin >= end)
 		return;
 
-	int keyi = PartSort3(a, begin, end);
-
-	_QuickSort(a, begin, keyi - 1);
-	_QuickSort(a, keyi + 1, end);
+	if (end - begin > 10)
+	{
+		int keyi = PartSort3(a, begin, end);
+		// [begin, keyi-1] keyi [keyi+1, end]
+		_QuickSort(a, begin, keyi - 1);
+		_QuickSort(a, keyi + 1, end);
+	}
+	else // 小区间优化
+	{
+		// 插入排序
+		InsertSort(a + begin, end - begin + 1);
+	}
 }
 
-static int CmpByInt(const void* e1, const void* e2)
+int CmpByInt(const void* e1, const void* e2)
 {
+	assert(e1 && e2);
+
 	return *(int*)e1 - *(int*)e2;
 }
 
@@ -271,4 +352,46 @@ void QuickSort(int* a, int n)
 
 	// 调用库函数
 	//qsort(a, n, sizeof(a[0]), CmpByInt);
+}
+
+static void _QuickSortNonR(int* a, int begin, int end)
+{
+	assert(a);
+
+	ST st;
+	StackInit(&st);
+	StackPush(&st, end);
+	StackPush(&st, begin);
+
+	while (!StackEmpty(&st))
+	{
+		int left = StackTop(&st);
+		StackPop(&st);
+
+		int right = StackTop(&st);
+		StackPop(&st);
+
+		int keyi = PartSort3(a, left, right);
+		// [left, keyi-1] keyi [keyi+1, right]
+
+		if (keyi + 1 < right)
+		{
+			StackPush(&st, right);
+			StackPush(&st, keyi + 1);
+		}
+		if (left < keyi - 1)
+		{
+			StackPush(&st, keyi - 1);
+			StackPush(&st, left);
+		}
+	}
+
+	StackDestroy(&st);
+}
+
+void QuickSortNonR(int* a, int n)
+{
+	assert(a);
+
+	_QuickSortNonR(a, 0, n - 1);
 }

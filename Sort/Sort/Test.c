@@ -11,26 +11,28 @@ void TestSort(void(*pSort)(int*, int))
 		perror("TestSort::calloc");
 		return;
 	}
+	int* tmp = calloc(n, sizeof(int));
+	if (tmp == NULL)
+	{
+		perror("TestSort::calloc");
+		return;
+	}
+
+	// 初始化待排序数组
 	for (int i = 0; i < n; i++)
 	{
-		a[i] = rand();
+		tmp[i] = a[i] = rand();
 	}
+
+	// 排序tmp用于检验
+	qsort(tmp, n, sizeof(tmp[0]), CmpByInt);
 
 	clock_t begin = clock();
 	pSort(a, n);
 	clock_t end = clock();
 
 	// 检验是否排序成功
-	bool flag = true;
-	for (int i = 0; i < n - 1; i++)
-	{
-		if (a[i] > a[i + 1])
-		{
-			flag = false;
-			break;
-		}
-	}
-	if (flag)
+	if (memcmp(a, tmp, n * sizeof(int)) == 0)
 		printf("排序成功，");
 	else
 		printf("排序失败，");
@@ -43,8 +45,8 @@ void TestSort(void(*pSort)(int*, int))
 
 void TestAll()
 {
-	void(*pSort[])(int*, int) = { InsertSort, ShellSort, HeapSort, SelectSort, BubbleSort, QuickSort };
-	char* sortFunName[] = { "InsertSort", "ShellSort", "HeapSort", "SelectSort", "BubbleSort", "QuickSort" };
+	void(*pSort[])(int*, int) = { InsertSort, ShellSort, HeapSort, SelectSort, BubbleSort, QuickSort, QuickSortNonR };
+	char* sortFunName[] = { "InsertSort", "ShellSort", "HeapSort", "SelectSort", "BubbleSort", "QuickSort", "QuickSortNonR" };
 	int sz = sizeof(pSort) / sizeof(pSort[0]);
 	const int n = 100000;
 	int* a = calloc(n, sizeof(int));
@@ -59,12 +61,21 @@ void TestAll()
 		perror("TestAll::calloc");
 		return;
 	}
+	int* tmp = calloc(n, sizeof(int));
+	if (tmp == NULL)
+	{
+		perror("TestAll::calloc");
+		return;
+	}
 
 	// 初始化待排序数组
 	for (int i = 0; i < n; i++)
 	{
-		a[i] = rand();
+		tmp[i] = a[i] = rand();
 	}
+
+	// 排序tmp用于检验
+	qsort(tmp, n, sizeof(tmp[0]), CmpByInt);
 
 	for (int i = 0; i < sz; i++)
 	{
@@ -74,18 +85,10 @@ void TestAll()
 		clock_t end = clock();
 
 		// 检验是否排序成功
-		bool flag = true;
-		for (int j = 0; j < n - 1; j++)
-		{
-			if (copy[j] > copy[j + 1])
-			{
-				flag = false;
-				printf("pSort[%d]: %-20s排序失败", i, sortFunName[i]);
-				break;
-			}
-		}
-		if (flag)
+		if (memcmp(copy, tmp, n * sizeof(int)) == 0)
 			printf("pSort[%d]: %-20s排序成功", i, sortFunName[i]);
+		else
+			printf("pSort[%d]: %-20s排序失败", i, sortFunName[i]);
 
 		printf("，耗时%-6d毫秒\n", end - begin);
 	}
@@ -94,14 +97,16 @@ void TestAll()
 	a = NULL;
 	free(copy);
 	copy = NULL;
+	free(tmp);
+	tmp = NULL;
 }
 
 int main()
 {
 	srand((unsigned int)time(NULL));
 
-	TestSort(QuickSort);
-	//TestAll();
+	//TestSort(QuickSortNonR);
+	TestAll();
 
 	return 0;
 }

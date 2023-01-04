@@ -6,6 +6,10 @@
 #include <time.h>
 #include <string.h>
 #include <stdbool.h>
+#include "Stack.h"
+
+// 比较函数
+int CmpByInt(const void* e1, const void* e2);
 
 // 打印数组
 void PrintArr(int* a, int n);
@@ -26,4 +30,9 @@ void SelectSort(int* a, int n);
 void BubbleSort(int* a, int n);
 
 // 快速排序
+
+// 递归
 void QuickSort(int* a, int n);
+
+// 非递归
+void QuickSortNonR(int* a, int n);
