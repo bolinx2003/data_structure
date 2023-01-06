@@ -493,7 +493,7 @@ void MergeSortNonR1(int* a, int n)
 			int j = begin1;
 			while (begin1 <= end1 && begin2 <= end2)
 			{
-				if (a[begin1] < a[begin2])
+				if (a[begin1] <= a[begin2])
 				{
 					tmp[j++] = a[begin1++];
 				}
@@ -554,7 +554,7 @@ void MergeSortNonR(int* a, int n)
 			int j = begin1;
 			while (begin1 <= end1 && begin2 <= end2)
 			{
-				if (a[begin1] < a[begin2])
+				if (a[begin1] <= a[begin2])
 				{
 					tmp[j++] = a[begin1++];
 				}
